@@ -1,0 +1,55 @@
+@switch (productDetailState.status()) {
+@case ("loading") {
+<p>Loading...</p>
+}
+
+@case ("error") {
+<p>Error</p>
+}
+
+@default {
+<section class="py-8 pt-32 bg-white dark:bg-gray-950 antialiased min-h-screen">
+    <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
+        <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
+            <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
+                <img class="w-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
+                    alt="" />
+                <img class="w-full hidden rounded-xl dark:block" [src]="productDetailState.product()?.image" alt="" />
+            </div>
+
+            <div class="mt-6 sm:mt-8 lg:mt-0 px-10">
+                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
+                    {{productDetailState.product()?.title}}
+                </h1>
+                <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
+                    <p class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
+                        {{productDetailState.product()?.price | currency}}
+                    </p>
+                </div>
+
+                @if(!isAuthenticated.getUserRole()){
+                <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                    <button (click)="addToCart()"
+                        class="inline-flex items-center gap-2 bg-blue-800 p-3 text-white font-medium rounded-full text-md">
+                        <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
+                        </svg>
+                        Agregar al carrito
+                    </button>
+                </div>
+                }
+                <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
+                <div class="flex flex-col gap-4">
+                    <h3 class="text-2xl font-semibold">Description</h3>
+                    <p class="mb-6 first-letter:uppercase text-gray-500 dark:text-gray-400">
+                        {{productDetailState.product()?.description}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+}
+}

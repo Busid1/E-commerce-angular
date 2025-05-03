@@ -1,0 +1,17 @@
+@if (productsList.length > 0) {
+    <ul class="flex flex-col gap-2 z-10 absolute top-10 pt-16 pb-5 px-3 w-full bg-slate-800 rounded-3xl">
+      <h3 class="text-lg">Productos encontrados:</h3>
+      @for(product of productsList; track product) {
+        <li class="flex gap-5 bg-opacity-90 bg-slate-900 rounded-xl p-2">
+          <a class="flex gap-5" [routerLink]="['/product', product._id]">
+            <img class="size-20 rounded" [src]="product.image" alt="">
+            <div class="flex flex-col justify-between">
+              <li>{{ product.title }}</li>
+              <li>{{ product.price | currency }}</li>
+            </div>
+          </a>
+        </li>
+      }
+      </ul>
+  }
+  
