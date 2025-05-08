@@ -39,7 +39,7 @@ export default class SearchBarComponent {
     console.log('Submit clicked, input value: ', this.inputValue); // Verifica que el valor de inputValue se ha actualizado
 
     this.router.navigate(['/search'], {
-      queryParams: { query: this.inputValue }  // Pasamos el valor de búsqueda como parámetro
+      queryParams: { product: this.inputValue }  // Pasamos el valor de búsqueda como parámetro
     });
 
   }

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import "dotenv/config";
 
-const MONGODB_URI = "mongodb+srv://busid:edb1234@cluster0.85eam.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const MONGODB_URI = process.env.MONGODB_URI
 
 if (!MONGODB_URI) {
     throw new Error(

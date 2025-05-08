@@ -3,7 +3,7 @@
     <div class="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 auto-rows-auto">
         @for (purchaseItem of purchases; track purchaseItem?.product?._id) {
             <div class="flex flex-col items-center gap-4 pb-3 bg-slate-800 rounded-xl shadow-md hover:shadow-lg">
-                <img class="rounded w-full object-cover h-72" [src]="purchaseItem.product.image" [alt]="purchaseItem.product.title">
+                <img class="rounded-t-xl w-full object-cover h-72" [src]="purchaseItem.product.image" [alt]="purchaseItem.product.title">
                 <div class="flex justify-around w-full">
                     <span>{{purchaseItem.product.title}}</span>
                     <span>Price: {{purchaseItem.product.price | currency}}</span>
