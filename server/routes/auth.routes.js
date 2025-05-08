@@ -1,7 +1,7 @@
 import { Router } from "express";
 import Stripe from 'stripe';
 import User from '../models/user.model.js';
-import bcrypt from "bcrypt";
+import bcrypt from 'bcryptjs';
 import "dotenv/config";
 import jwt from 'jsonwebtoken';
 import { authenticateToken } from "../middleware/jwt.middleware.js";
@@ -26,13 +26,6 @@ router.post('/register', async (req, res) => {
             email,
             password: passwordHash,
         });
-
-        // const adminUser = new User({
-        //   email: 'admin@admin.com',
-        //   password: await bcrypt.hash('admin', 10),
-        //   role: 'admin'
-        // });
-        // await adminUser.save();
 
         const userSaved = await newUser.save();
         const token = jwt.sign({ userId: userSaved._id, role: userSaved.role }, SECRET_KEY);
