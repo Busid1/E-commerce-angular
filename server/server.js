@@ -3,6 +3,9 @@ import express from "express";
 import productRoutes from './routes/products.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import cors from "cors";
+import { fileURLToPath } from 'url';
+import path from 'path';
+
 const app = express();
 const corsOptions = {
   origin: (origin, callback) => {
@@ -18,6 +21,19 @@ app.use(cors(corsOptions));
 // Rutas
 app.use('/', productRoutes);
 app.use('/', authRoutes);
+
+// __dirname en módulos ES
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Servir archivos estáticos desde Angular
+app.use(express.static(path.join(__dirname, '../client/dist/e-commerce/browser')));
+
+// Redirigir cualquier otra ruta al index.html (SPA)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist/e-commerce/browser/index.html'));
+});
+
 
 // Base de datos
 dbConnect();
