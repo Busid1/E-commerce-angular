@@ -19,8 +19,8 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 // Rutas
-app.use('/', productRoutes);
-app.use('/', authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/auth', authRoutes);
 
 // __dirname en módulos ES
 const __filename = fileURLToPath(import.meta.url);
