@@ -68,6 +68,6 @@ export class ProductsStateService {
 
     constructor() {
         this.changePage$.next(1); // Carga inicial de productos
-      }
-      
+    }
+
 }

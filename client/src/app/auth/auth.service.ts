@@ -1,20 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode'
+import { BaseHttpService } from '../shared/data-access/base-http.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthService {
+export class AuthService extends BaseHttpService {
+    private isAuthenticated = this.handleIsAuthenticated();
+    private router: Router;
+
+    constructor(router: Router) {
+        super();
+        this.router = router;
+    }
+
     handleIsAuthenticated() {
         if (localStorage.getItem("authToken")) {
             return true
         }
         return false
     }
-
-    private isAuthenticated = this.handleIsAuthenticated();
-    constructor(private router: Router) { }
 
     isLoggedIn(): boolean {
         return this.isAuthenticated;
@@ -39,9 +45,17 @@ export class AuthService {
         if (!token) return null;
 
         const decoded: any = jwtDecode(token);
-        if(decoded.role === "user"){
+        if (decoded.role === "user") {
             return false
         }
         return true;
+    }
+
+    loginUser(email: string, password: string) {
+        return this.http.post(`${this.apiAuthUrl}/login`, { email, password }, { withCredentials: true });
+    }
+
+    registerUser(email: string, password: string) {
+        return this.http.post(`${this.apiAuthUrl}/register`, { email, password }, { withCredentials: true });
     }
 }

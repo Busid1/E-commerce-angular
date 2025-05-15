@@ -3,6 +3,8 @@ import { CartStateService } from '../../shared/data-access/cart-state.service';
 import { CurrencyPipe } from '@angular/common';
 import { loadStripe, Stripe, StripeCardElement, StripeElements } from '@stripe/stripe-js';
 import axios from 'axios';
+import { ProductService } from '../../products/data-access/products.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',
@@ -12,6 +14,7 @@ import axios from 'axios';
   styleUrl: './checkout.component.scss'
 })
 export default class CheckoutComponent implements OnInit {
+  constructor(private productsService: ProductService) { }
   state = inject(CartStateService).state;
   stripe: Stripe | null = null;
   elements: StripeElements | null = null;
@@ -34,9 +37,9 @@ export default class CheckoutComponent implements OnInit {
     this.card?.mount('#card-element');
   }
 
-  async handleSubmit(event: Event) {    
+  async handleSubmit(event: Event) {
     event.preventDefault();
-    
+
     if (!this.stripe || !this.card) return;
 
     const { error, paymentMethod } = await this.stripe.createPaymentMethod({
@@ -50,24 +53,14 @@ export default class CheckoutComponent implements OnInit {
       try {
         const tokenStorage = localStorage.getItem('authToken');
         const { id } = paymentMethod;
+        const amount = Number(this.state.price().toFixed(2)) * 100; // Convertir a centavos
+        const products = this.state.products();
 
         if (!tokenStorage) {
           throw new Error('Authentication token not found');
-        }        
+        }
 
-        await axios.post(
-          'http://localhost:2000/user/checkout',
-          { 
-            id,
-            amount: Number(this.state.price().toFixed(2)) * 100, // Convertir a centavos,
-            products: this.state.products()
-          }, // Enviar el token de Stripe en el cuerpo
-          {
-            headers: {
-              Authorization: `Bearer ${tokenStorage}`, // Encabezado de autenticación
-            },
-          }
-        );
+        await firstValueFrom(this.productsService.checkout(id, amount, products, tokenStorage));
       } catch (error) {
         console.log('Request error:', error);
       }

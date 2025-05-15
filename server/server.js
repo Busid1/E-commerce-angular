@@ -2,6 +2,7 @@ import dbConnect from "./db/dbConnect.js";
 import express from "express";
 import productRoutes from './routes/products.routes.js';
 import authRoutes from './routes/auth.routes.js';
+import cartRoutes from './routes/cart.routes.js';
 import cors from "cors";
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -19,8 +20,9 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 // Rutas
-app.use('/api/products', productRoutes);
+app.use('/api', productRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api', cartRoutes);
 
 // __dirname en módulos ES
 const __filename = fileURLToPath(import.meta.url);
@@ -33,7 +35,6 @@ app.use(express.static(path.join(__dirname, '../client/dist/e-commerce/browser')
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/e-commerce/browser/index.html'));
 });
-
 
 // Base de datos
 dbConnect();

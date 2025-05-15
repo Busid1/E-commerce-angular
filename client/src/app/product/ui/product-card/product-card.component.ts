@@ -6,6 +6,8 @@ import { CurrencyPipe } from '@angular/common';
 import UpdateProductComponent from '../../../admin/crud/update-product/update-product.component';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { firstValueFrom } from 'rxjs';
+import { ProductService } from '../../../products/data-access/products.service';
 
 @Component({
   selector: 'app-product-card',
@@ -15,6 +17,7 @@ import Swal from 'sweetalert2';
   styles: ``
 })
 export class ProductCardComponent {
+  constructor(private productsService: ProductService) { }
   product = input.required<Product>();
   isAuthenticated = inject(AuthService);
   public showUpdateModal = false;
@@ -23,10 +26,11 @@ export class ProductCardComponent {
 
   async add(event: Event) {
     const token = localStorage.getItem('authToken');
+    if (!token) return;
     event.stopPropagation();
     event.preventDefault();
     this.addToCart.emit(this.product());
-    await axios.post('http://localhost:2000/user/cart', { productId: this.product()._id }, {headers: {Authorization: `Bearer ${token}`}})
+    await firstValueFrom(this.productsService.addToCart(this.product()._id, token));
   }
 
   edit(event: Event) {
@@ -38,7 +42,6 @@ export class ProductCardComponent {
   }
 
   delete(event: Event) {
-    event.stopPropagation();
     event.preventDefault();
     Swal.fire({
       title: "¿Seguro que quieres eliminar este producto?",
@@ -49,8 +52,8 @@ export class ProductCardComponent {
       cancelButtonText: "Cancelar"
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axios.delete(`http://localhost:2000/delete/${this.product()._id}`)
         Swal.fire("Producto eliminado", "", "success");
+        await firstValueFrom(this.productsService.deleteProduct(this.product()._id));
         window.location.reload()
       } else if (result.isDenied) {
         Swal.fire("Producto no eliminado", "", "info");

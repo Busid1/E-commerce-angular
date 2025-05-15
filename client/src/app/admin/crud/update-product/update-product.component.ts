@@ -1,8 +1,9 @@
 import { Component, effect, inject } from '@angular/core';
 import { ProductCardComponent } from '../../../product/ui/product-card/product-card.component';
 import ProductDetailStateService from '../../../products/data-access/product-detail-state.service';
-import axios from 'axios';
 import Swal from 'sweetalert2';
+import { ProductService } from '../../../products/data-access/products.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-update-product',
@@ -12,16 +13,18 @@ import Swal from 'sweetalert2';
   styleUrl: './update-product.component.scss',
   providers: [ProductDetailStateService]
 })
+
 export default class UpdateProductComponent {
   productState = inject(ProductCardComponent);
+  productDetailState = inject(ProductDetailStateService).state;
+  constructor(private productsService: ProductService) { }
 
   closeUpdateModal() {
     this.productState.showUpdateModal = false
     document.body.classList.remove("overflow-hidden");
   }
 
-  productDetailState = inject(ProductDetailStateService).state;
-  constructor() {
+  super() {
     effect(() => {
       const _id = this.productState._id
       if (_id) {
@@ -56,26 +59,37 @@ export default class UpdateProductComponent {
 
   deleteProduct() {
     Swal.fire({
-      title: "¿Seguro que quieres eliminar este producto?",
+      title: "Are you sure you want to delete this product?",
       showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: "Si",
+      confirmButtonText: "Yes",
       denyButtonText: "No",
-      cancelButtonText: "Cancelar"
+      cancelButtonText: "Cancel"
     }).then(async (result) => {
       if (result.isConfirmed) {
-        Swal.fire("Producto eliminado", "", "success");
+        Swal.fire("Removed product", "", "success");
+        await firstValueFrom(this.productsService.deleteProduct(this.productState._id));
         window.location.reload()
       } else if (result.isDenied) {
-        Swal.fire("Producto no eliminado", "", "info");
+        Swal.fire("Product not removed", "", "info");
       }
     });
   }
 
   async submitUpdateForm(event: Event) {
     event.preventDefault()
+
+    const formDataToSend = new FormData();
+    formDataToSend.append('title', this.formData.title);
+    formDataToSend.append('price', this.formData.price.toString());
+    formDataToSend.append('description', this.formData.description);
+    formDataToSend.append('category', this.formData.category);
+    if (this.formData.image) {
+      formDataToSend.append('image', this.formData.image);
+    }
+
     Swal.fire({
-      title: "¿Seguro que quieres actualizar este producto?",
+      title: "Are you sure you want to update this product?",
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: "Si",
@@ -84,19 +98,19 @@ export default class UpdateProductComponent {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await axios.put(`http://localhost:2000/update/${this.productState._id}`, this.formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }
-          });
-          Swal.fire("Producto actualizado", "", "success");
+          const response = await firstValueFrom(
+            this.productsService.updateProduct(this.productState._id, formDataToSend)
+          );
+          Swal.fire("Updated product", "", "success");
           setTimeout(() => {
             window.location.reload()
           }, 3000)
-          console.log("Producto actualizado:", response.data);
+          console.log("Updated product:", response);
         } catch (error) {
-          console.error("Error al actualizar el producto:", error);
+          console.error("Error updating the product:", error);
         }
       } else if (result.isDenied) {
-        Swal.fire("Producto no actualizado", "", "info");
+        Swal.fire("Product not updated", "", "info");
       }
     });
   }

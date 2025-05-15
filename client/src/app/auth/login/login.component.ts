@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import axios from 'axios';
 import { AuthService } from '../auth.service';
 import { RouterLink } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +11,7 @@ import { RouterLink } from '@angular/router';
 })
 
 export default class LoginComponent {
+  constructor(private authService: AuthService) { }
   status = inject(AuthService);
 
   formData = {
@@ -28,13 +29,12 @@ export default class LoginComponent {
     const { email, password } = this.formData;
 
     try {
-      await axios.post('http://localhost:2000/login', { email, password }, {withCredentials: true})
-        .then(response => {
-          const token = response.data.authToken;          
-          const role = response.data.role;          
-          localStorage.setItem("authToken", token)
-          localStorage.setItem("role", role)
-        })
+      const response: any = await firstValueFrom(this.authService.loginUser(email, password));
+      const token = response.authToken;
+      const role = response.role;
+
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('role', role);
       alert('Bienvenido de nuevo');
       this.status.login();
     } catch (error) {

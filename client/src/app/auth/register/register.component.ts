@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import axios from 'axios';
 import { AuthService } from '../auth.service';
 import { RouterLink } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -11,6 +12,7 @@ import { RouterLink } from '@angular/router';
 })
 
 export default class RegisterComponent {
+  constructor(private authService: AuthService) { }
   status = inject(AuthService);
 
   formData = {
@@ -28,14 +30,12 @@ export default class RegisterComponent {
     const { email, password } = this.formData;
 
     try {
-      await axios.post('http://localhost:2000/register', { email, password }, { withCredentials: true })
-        .then(response => {
-          const token = response.data.authToken;
-          const role = response.data.role;
-          
-          localStorage.setItem("authToken", token)
-          localStorage.setItem("role", role)
-        })
+      const response: any = await firstValueFrom(this.authService.registerUser(email, password));
+      const token = response.authToken;
+      const role = response.role;
+
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('role', role);
       this.status.login();
       alert('Usuario registrado');
     } catch (error) {

@@ -1,6 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
-import axios from 'axios';
+import { ProductService } from '../products/data-access/products.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-purchases',
@@ -9,21 +10,22 @@ import axios from 'axios';
   templateUrl: './purchases.component.html',
 })
 export default class PurchasesComponent {
-  purchases: any[] = []; // Almacena las compras aquí
-
-  constructor() {
+  constructor(private productsService: ProductService) {
     this.fetchPurchases();
   }
 
+  purchases: any[] = [];
+
   async fetchPurchases() {
     const token = localStorage.getItem('authToken');
+    if (!token) return;
+
     try {
-      const response = await axios.get('http://localhost:2000/user/purchases', { 
-        headers: { Authorization: `Bearer ${token}` } 
-      });
-      this.purchases = response.data; // Asigna los datos recibidos
+      const response = await firstValueFrom(this.productsService.getAllPurchases(token));
+      this.purchases = response;
+
     } catch (error) {
       console.error('Error fetching purchases:', error);
-    }    
+    }
   }
 }

@@ -23,18 +23,22 @@ export class CartStateService {
 
     loadProducts$ = this._storageService
         .loadProducts()
-        .pipe(map((products) => ({ 
-            products, loaded: true 
+        .pipe(map((products) => ({
+            products, loaded: true
         })));
 
     state = signalSlice({
         initialState: this.initialState,
         sources: [this.loadProducts$],
         selectors: (state) => ({
-            count: () => state().products.reduce((acc, product) => acc + product.quantity, 0),
-            price: () => {
-                return state().products.reduce((acc, product) => acc + product.product.price * product.quantity, 0)
-            }
+            count: () => (Array.isArray(state().products) ? state().products : []).reduce(
+                (acc, product) => acc + product.quantity,
+                0
+            ),
+            price: () => (Array.isArray(state().products) ? state().products : []).reduce(
+                (acc, product) => acc + product.product.price * product.quantity,
+                0
+            )
         }),
         actionSources: {
             add: (state, action$: Observable<ProductItemCart>) =>
@@ -53,8 +57,12 @@ export class CartStateService {
     })
 
     private add(state: Signal<State>, product: ProductItemCart) {
-        const isInCart = state().products.find((productInCart) =>
-            productInCart.product._id === product.product._id)
+        const isInCart = Array.isArray(state().products)
+            ? state().products.find((productInCart) =>
+                productInCart.product._id === product.product._id
+            )
+            : undefined;
+
 
         if (!isInCart) {
             return {
@@ -76,7 +84,7 @@ export class CartStateService {
 
     private update(state: Signal<State>, product: ProductItemCart) {
         const products = state().products.map((productInCart) => {
-            if (productInCart.product._id === product.product._id) {                
+            if (productInCart.product._id === product.product._id) {
                 return { ...productInCart, quantity: product.quantity }
             }
 

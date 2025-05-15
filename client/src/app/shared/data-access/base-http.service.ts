@@ -5,7 +5,8 @@ import { inject, Injectable } from "@angular/core";
     providedIn: 'root',
 })
 
-export class BaseHttpService {
-    http = inject(HttpClient);
-    apiUrl = "http://localhost:2000";
+export abstract class BaseHttpService {
+    protected http = inject(HttpClient);
+    protected apiProductsUrl = "http://localhost:2000/api";
+    protected apiAuthUrl = "http://localhost:2000/api/auth";
 }
