@@ -6,18 +6,15 @@ import cartRoutes from './routes/cart.routes.js';
 import cors from "cors";
 import { fileURLToPath } from 'url';
 import path from 'path';
+import cookieParser from "cookie-parser";
 
 const app = express();
-const corsOptions = {
-  origin: (origin, callback) => {
-    callback(null, origin || '*'); // Permite cualquier origen dinámicamente
-  },
-  credentials: true,
-};
 
 // Middlewares
+app.use(cookieParser())
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // Rutas
 app.use('/api', productRoutes);
@@ -44,3 +41,5 @@ const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
+
+export default app;
