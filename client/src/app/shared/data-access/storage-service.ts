@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { firstValueFrom, from, Observable, of } from "rxjs";
+import { firstValueFrom, from, Observable, of, tap } from "rxjs";
 import { ProductItemCart } from "../interfaces/product.interface";
 import axios from "axios";
 import { ProductService } from "../../products/data-access/products.service";
@@ -24,12 +24,9 @@ export class StorageService {
         }
 
         return from(
-            axios.get(`http://localhost:2000/api/user/cart`, {
-                headers: { Authorization: `Bearer ${token}` }
-            }).then(response => {
-                this.saveProducts(response.data);
-                return response.data;
-            })
+            this.productsService.getCart(token).pipe(
+                tap((response: any) => this.saveProducts(response)),
+            )
         );
     }
 
