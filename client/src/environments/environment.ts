@@ -1,4 +1,4 @@
 export const environment = {
-  API_URL: 'https://fakestoreapi.com',
-  BASE_URL: 'http://localhost:4200'
+  production: false,
+  apiUrl: 'http://localhost:2000/api'
 };

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode'
 import { BaseHttpService } from '../shared/data-access/base-http.service';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
     providedIn: 'root'
@@ -52,10 +53,10 @@ export class AuthService extends BaseHttpService {
     }
 
     loginUser(email: string, password: string) {
-        return this.http.post(`${this.apiAuthUrl}/login`, { email, password }, { withCredentials: true });
+        return this.http.post(`${environment.apiUrl}/auth/login`, { email, password }, { withCredentials: true });
     }
 
     registerUser(email: string, password: string) {
-        return this.http.post(`${this.apiAuthUrl}/register`, { email, password }, { withCredentials: true });
+        return this.http.post(`${environment.apiUrl}/auth/register`, { email, password }, { withCredentials: true });
     }
 }
