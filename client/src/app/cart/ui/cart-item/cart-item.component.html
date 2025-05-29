@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-      <a [href]="['/products/' + productCartItem().product._id]"
+      <a [href]="['/product/' + productCartItem().product._id]"
         class="text-base font-medium text-gray-900 hover:underline dark:text-white">{{productCartItem().product.title}}</a>
       <div class="flex items-center gap-4">
         <button (click)="onRemove.emit(productCartItem().product._id)" type="button"

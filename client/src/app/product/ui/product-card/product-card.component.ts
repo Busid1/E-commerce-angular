@@ -4,24 +4,26 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../auth/auth.service';
 import { CurrencyPipe } from '@angular/common';
 import UpdateProductComponent from '../../../admin/crud/update-product/update-product.component';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import { firstValueFrom } from 'rxjs';
 import { ProductService } from '../../../products/data-access/products.service';
+import { ToastCartComponent } from '../../../shared/ui/toast-cart/toast-cart.component';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [RouterLink, CurrencyPipe, UpdateProductComponent],
+  imports: [RouterLink, CurrencyPipe, UpdateProductComponent, ToastCartComponent],
   templateUrl: './product-card.component.html',
   styles: ``
 })
+
 export class ProductCardComponent {
   constructor(private productsService: ProductService) { }
   product = input.required<Product>();
   isAuthenticated = inject(AuthService);
   public showUpdateModal = false;
   addToCart = output<Product>();
+  addToCartToast = false;
   _id = ""
 
   async add(event: Event) {
@@ -30,6 +32,10 @@ export class ProductCardComponent {
     event.stopPropagation();
     event.preventDefault();
     this.addToCart.emit(this.product());
+    this.addToCartToast = true;
+    setTimeout(() => {
+      this.addToCartToast = false;
+    }, 3000);
     await firstValueFrom(this.productsService.addToCart(this.product()._id, token));
   }
 

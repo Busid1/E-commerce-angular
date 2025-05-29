@@ -1,67 +1,67 @@
 {
-  "hash": "44ab302b",
+  "hash": "f0f6f6a1",
   "configHash": "6182031b",
-  "lockfileHash": "7902b832",
-  "browserHash": "7d28def9",
+  "lockfileHash": "6c76200c",
+  "browserHash": "b2532c7e",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "4332537f",
+      "fileHash": "1a1f225f",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "c630e1a2",
+      "fileHash": "3d0b92d9",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "d35cf266",
+      "fileHash": "5fe92cb6",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "0cf3c0b5",
+      "fileHash": "aaa6558c",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "d5878f1b",
+      "fileHash": "e4bc587e",
       "needsInterop": false
     },
     "@stripe/stripe-js": {
       "src": "../../../../../../node_modules/@stripe/stripe-js/lib/index.mjs",
       "file": "@stripe_stripe-js.js",
-      "fileHash": "e6725a98",
+      "fileHash": "8d9afc6f",
       "needsInterop": false
     },
     "jwt-decode": {
       "src": "../../../../../../node_modules/jwt-decode/build/esm/index.js",
       "file": "jwt-decode.js",
-      "fileHash": "d781793f",
+      "fileHash": "4f4a1b7c",
       "needsInterop": false
     },
     "ngxtension/signal-slice": {
       "src": "../../../../../../node_modules/ngxtension/fesm2022/ngxtension-signal-slice.mjs",
       "file": "ngxtension_signal-slice.js",
-      "fileHash": "c1b032d1",
+      "fileHash": "39ef9824",
       "needsInterop": false
     },
     "rxjs": {
       "src": "../../../../../../node_modules/rxjs/dist/esm5/index.js",
       "file": "rxjs.js",
-      "fileHash": "8921a496",
+      "fileHash": "ade0491d",
       "needsInterop": false
     },
     "sweetalert2": {
       "src": "../../../../../../node_modules/sweetalert2/dist/sweetalert2.esm.all.js",
       "file": "sweetalert2.js",
-      "fileHash": "c9b1ec9a",
+      "fileHash": "c0bfc9f0",
       "needsInterop": false
     }
   },

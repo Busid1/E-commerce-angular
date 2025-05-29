@@ -43,7 +43,7 @@ export default class UpdateProductComponent {
 
   handleOnChange(field: string, event: Event) {
     let value = (event.target as HTMLInputElement).value;
-    if (field === "price" && value.length > 3) {
+    if (field === "price" && value.length > 4) {
       value = value.slice(0, 3);
       (event.target as HTMLInputElement).value = value;
     }

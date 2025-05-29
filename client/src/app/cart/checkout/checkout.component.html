@@ -14,7 +14,7 @@
             </div>
             <form (submit)="handleSubmit($event)" class="w-full flex flex-col gap-4">
               <div id="card-element" class="p-3 bg-gray-100 rounded"></div>
-              <button type="submit" class="bg-green-500 text-white py-3.5 rounded-md hover:bg-green-600">
+              <button type="submit" class="bg-green-500 text-black font-medium py-3 rounded-md hover:bg-green-600">
                 Pay
               </button>
             </form>
@@ -22,11 +22,11 @@
         </form>
       </div>
 
-      <div class="bg-slate-100 p-6 rounded-md">
-        <h2 class="text-3xl font-bold text-gray-800">{{state.price() | currency}}</h2>
+      <div class="bg-slate-100 p-5 max-md:p-3 rounded-md">
+        <h2 class="text-3xl max-md:text-2xl font-bold text-gray-800">{{state.price() | currency}}</h2>
         <ul class="text-gray-800 mt-8 space-y-3">
           @for (cartItem of state.products(); track cartItem?.product?._id) {
-          <li class="flex flex-wrap gap-4 text-lg overflow-hidden whitespace-nowrap text-ellipsis">
+          <li class="flex flex-wrap gap-4 text-lg overflow-hidden whitespace-nowrap max-sm:text-sm text-ellipsis">
             <span class="flex-1 truncate" title="{{cartItem.product.title}}">{{cartItem.product.title}}</span>
             <span class="ml-auto font-bold">{{cartItem.quantity}}</span>
             <span>x</span>

@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router'; // Para leer los parámetros de la URL
 import { ProductsStateService } from '../shared/data-access/products-state.service'; // Asegúrate de que el servicio esté disponible
-import { CurrencyPipe } from '@angular/common';
 import { ProductCardComponent } from '../product/ui/product-card/product-card.component';
 import { CartStateService } from '../shared/data-access/cart-state.service';
 import { Product } from '../shared/interfaces/product.interface';

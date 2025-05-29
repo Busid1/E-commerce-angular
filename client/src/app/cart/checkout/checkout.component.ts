@@ -2,9 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CartStateService } from '../../shared/data-access/cart-state.service';
 import { CurrencyPipe } from '@angular/common';
 import { loadStripe, Stripe, StripeCardElement, StripeElements } from '@stripe/stripe-js';
-import axios from 'axios';
 import { ProductService } from '../../products/data-access/products.service';
 import { firstValueFrom } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-checkout',
@@ -55,12 +55,14 @@ export default class CheckoutComponent implements OnInit {
         const { id } = paymentMethod;
         const amount = Number(this.state.price().toFixed(2)) * 100; // Convertir a centavos
         const products = this.state.products();
-
+        
         if (!tokenStorage) {
           throw new Error('Authentication token not found');
         }
-
+        
         await firstValueFrom(this.productsService.checkout(id, amount, products, tokenStorage));
+        await Swal.fire("Product/s purchased", "", "success");
+        window.location.href = '/purchases';
       } catch (error) {
         console.log('Request error:', error);
       }
