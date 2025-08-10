@@ -1,4 +1,4 @@
-<div class="mx-auto max-w-screen-xl max-sm:px-5 px-20 py-10 min-h-screen">
+<div class="mx-auto max-w-screen-lg max-sm:px-5 px-20 py-10 min-h-screen">
     @switch (productsState.state.status()) {
     @case ("loading") {
     <p>Loading...</p>
@@ -11,7 +11,7 @@
     @default {
     <div>
         <h2 class="text-3xl font-semibold mb-4">Products</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 auto-rows-auto">
             @for(product of productsState.state().products; track product){
             <app-product-card class="block" [product]="product" (addToCart)="addToCart($event)" />
             }

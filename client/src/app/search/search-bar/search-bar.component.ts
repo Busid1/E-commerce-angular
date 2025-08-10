@@ -13,13 +13,12 @@ import { ProductsStateService } from '../../shared/data-access/products-state.se
 export default class SearchBarComponent {
   productsState = inject(ProductsStateService);
   productsList: Array<any> = [];
-  inputValue: string = '';  // Aquí almacenamos el valor de la búsqueda
+  inputValue: string = '';
   router = inject(Router);
 
-  // Función para manejar el evento input y actualizar inputValue
   onSearch(event: Event) {
     const input = event.target as HTMLInputElement;
-    this.inputValue = input.value; // Actualizamos el valor del input
+    this.inputValue = input.value;
     const filterGamesTitle = this.productsState.state.products().filter(game => {
       const lowGameTitle = game.title.toLowerCase();
       const currentInputValue = this.inputValue.toLowerCase();
@@ -32,14 +31,13 @@ export default class SearchBarComponent {
     this.productsState.setFilteredProducts(filterGamesTitle);
   }
 
-  // Función para enviar el formulario y redirigir
   onSubmit(event: Event) {
     event.preventDefault();
 
-    console.log('Submit clicked, input value: ', this.inputValue); // Verifica que el valor de inputValue se ha actualizado
+    console.log('Submit clicked, input value: ', this.inputValue);
 
     this.router.navigate(['/search'], {
-      queryParams: { product: this.inputValue }  // Pasamos el valor de búsqueda como parámetro
+      queryParams: { product: this.inputValue }
     });
 
   }

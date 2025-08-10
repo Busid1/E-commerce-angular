@@ -1,34 +1,37 @@
-<div>
-    <form class="flex z-10 items-center max-w-xl px-5 mx-auto absolute top-1/2 left-0 right-0">
+<div class="relative flex flex-col justify-center items-center gap-5">
+    <h1 class="max-sm:text-2xl text-3xl font-bold tracking-tight leading-none dark:text-white">
+        Find the product you want
+    </h1>
+    <form class="flex z-10 items-center max-w-xl px-5 mx-auto w-full">
         <label for="simple-search" class="sr-only">Search</label>
         <div class="relative w-full">
             <input type="text" (input)="onSearch($event)" id="simple-search"
-                class="bg-gray-700 z-10 absolute backdrop-blur-md text-slate-200 text-md rounded-3xl block w-full ps-4 max-sm:p-2 p-4 bg-opacity-80"
+                class="bg-slate-800 border border-slate-600 focus:border-white z-10 absolute backdrop-blur-md text-white text-md rounded-3xl block w-full ps-4 max-sm:p-2 p-4 bg-opacity-80"
                 placeholder="Search product name..." required />
             @if(productsList.length > 0){
             <ul class="flex flex-col z-0 gap-2 absolute top-0 pt-16 pb-5 px-3 w-full bg-slate-800 rounded-3xl">
-                <h3 class="text-lg">Productos encontrados:</h3>
+                <h3 class="text-lg font-medium">Finded products:</h3>
                 @for(product of productsList; track product){
-                <li class="flex gap-5 bg-opacity-90 bg-slate-900 rounded-xl p-2">
-                    <a class="flex gap-5" [routerLink]="['/product/', product._id]">
-                        <img class="size-20 rounded" [src]="product.image" alt="">
-                        <div class="flex flex-col justify-between">
-                            <li>{{product.title}}</li>
-                            <li>{{product.price | currency}}</li>
-                        </div>
-                    </a>
-                </li>
+                <a class="flex gap-5 bg-opacity-90 bg-slate-900 rounded-xl p-4"
+                    [routerLink]="['/product/', product._id]">
+                    <img class="size-12 rounded" [src]="product.image" alt="">
+                    <div class="flex flex-col justify-between">
+                        <li class="font-medium">{{product.title}}</li>
+                        <li class="font-medium">{{product.price | currency}}</li>
+                    </div>
+                </a>
                 }
             </ul>
-        }
-        <button type="submit" (click)="onSubmit($event)"
-            class="p-5 max-sm:p-3 absolute z-50 right-0 text-md text-white bg-blue-700 rounded-r-3xl border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-            </svg>
-            <span class="sr-only">Search</span>
-        </button>
-</div>
-</form>
+            }
+            <button type="submit" (click)="onSubmit($event)"
+                class="p-3 absolute z-50 right-2 top-2 text-sm text-white bg-blue-700 rounded-full border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                </svg>
+                <span class="sr-only">Search</span>
+            </button>
+        </div>
+    </form>
 </div>

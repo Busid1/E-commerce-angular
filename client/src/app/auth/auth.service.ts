@@ -41,7 +41,7 @@ export class AuthService extends BaseHttpService {
         localStorage.removeItem("role")
     }
 
-    getUserRole() {
+    isAdmin() {
         const token = localStorage.getItem("authToken");
         if (!token) return null;
 

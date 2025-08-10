@@ -10,37 +10,29 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-// Middlewares
 app.use(cors({
-  origin: 'http://localhost:4200',  // Origen específico
-  credentials: true                 // Permitir cookies/autenticación
+  origin: 'http://localhost:4200', 
+  credentials: true                 
 }));
 app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-// Rutas
 app.use('/api', productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api', cartRoutes);
 
-// __dirname en módulos ES
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Servir archivos estáticos desde Angular
 app.use(express.static(path.join(__dirname, '../client/dist/e-commerce/browser')));
 
-// Redirigir cualquier otra ruta al index.html (SPA)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist/e-commerce/browser/index.html'));
 });
 
-// Base de datos
 dbConnect();
 
-// Puerto
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
