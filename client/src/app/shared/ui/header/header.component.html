@@ -1,5 +1,5 @@
-<nav class="z-20 bg-slate-900 flex justify-center items-center w-full fixed px-20 py-1.5">
-    <div class="max-w-screen-lg w-full flex flex-wrap items-center justify-between max-md:mx-6">
+<nav class="z-20 bg-slate-900 flex justify-center items-center w-full fixed py-1.5">
+    <div class="max-w-screen-lg w-full flex flex-wrap px-10 items-center justify-between">
         <a routerLink="/" class="flex items-center gap-2">
             <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">E-Shop</span>
         </a>
@@ -14,7 +14,7 @@
         </button>
         <div class="hidden w-full md:block md:w-auto max-md:py-2 max-md:bg-slate-900 rounded-xl" id="navbar-default">
             <ul
-                class="font-medium flex items-center justify-evenly gap-5 mx-auto p-2 rounded-lg md:mt-0 md:border-0">
+                class="font-medium flex items-center flex-wrap justify-evenly gap-8 mx-auto p-2 rounded-lg md:mt-0 md:border-0">
                 @if(!isAuthenticated.isLoggedIn()) {
                 <li>
                     <a routerLink="/auth/login" routerLinkActive="!text-blue-500"
@@ -38,7 +38,7 @@
                 <li>
                     <a routerLink="/create-product"
                         class="block py-2 px-4 rounded-lg text-md bg-blue-700 hover:bg-blue-800 transition dark:text-white" aria-current="page">Upload
-                        products</a>
+                        product</a>
                 </li>
                 }
                 @else if(!isAuthenticated.isAdmin() && isAuthenticated.isLoggedIn()) {

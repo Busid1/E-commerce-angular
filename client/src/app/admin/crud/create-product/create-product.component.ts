@@ -51,23 +51,19 @@ export default class CreateProductComponent {
     Swal.fire({
       title: "Are you sure you want to create this product?",
       showDenyButton: true,
-      showCancelButton: true,
       confirmButtonText: "Yes",
       denyButtonText: "No",
-      cancelButtonText: "Cancel"
+      icon: "question"
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await firstValueFrom(
+          await firstValueFrom(
             this.productsService.createProduct(formDataToSend)
           );
           Swal.fire("Product created", "", "success");
-          console.log("Product created:", response);
         } catch (error) {
           console.error("Error creating the product:", error);
         }
-      } else if (result.isDenied) {
-        Swal.fire("Product not created", "", "info");
       }
     });
   }

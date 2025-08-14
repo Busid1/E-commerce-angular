@@ -1,8 +1,10 @@
-<div class="mx-auto pb-4 bg-slate-900 border rounded-t-2xl rounded-b-2xl border-slate-600 rounded-md shadow-md">
+<div>
     <picture [routerLink]="['/product/', product()._id]">
-        <img class="cursor-pointer rounded-t-2xl w-full h-60 object-cover" [src]="product().image"
-            alt="Product Image" />
+        <img class="cursor-pointer rounded-t-2xl w-full h-60 object-cover"
+             [src]="product().image ? product().image : 'https://www.svgrepo.com/show/508699/landscape-placeholder.svg'"
+             alt={{product().title}} />
     </picture>
+
     <div>
         <div class="flex items-center justify-evenly p-2">
             <a class="text-xl hover:underline text-center p-2 font-medium max-w-36 truncate text-white dark:text-white overflow-hidden text-nowrap" [routerLink]="['/product/', product()._id]">

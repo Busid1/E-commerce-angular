@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { ProductsStateService } from '../../shared/data-access/products-state.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-search-bar',
@@ -33,8 +34,10 @@ export default class SearchBarComponent {
 
   onSubmit(event: Event) {
     event.preventDefault();
-
-    console.log('Submit clicked, input value: ', this.inputValue);
+    if(!this.inputValue){
+      Swal.fire("The field is empty", "", "error")
+      return
+    }
 
     this.router.navigate(['/search'], {
       queryParams: { product: this.inputValue }

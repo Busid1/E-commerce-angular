@@ -55,23 +55,21 @@ export default class UpdateProductComponent {
     if (file) {
       this.formData.image = file
     }
+    console.log(this.formData.image);
+    
   }
 
   deleteProduct() {
     Swal.fire({
       title: "Are you sure you want to delete this product?",
       showDenyButton: true,
-      showCancelButton: true,
       confirmButtonText: "Yes",
       denyButtonText: "No",
-      cancelButtonText: "Cancel"
     }).then(async (result) => {
       if (result.isConfirmed) {
         Swal.fire("Removed product", "", "success");
         await firstValueFrom(this.productsService.deleteProduct(this.productState._id));
         window.location.reload()
-      } else if (result.isDenied) {
-        Swal.fire("Product not removed", "", "info");
       }
     });
   }
@@ -91,10 +89,9 @@ export default class UpdateProductComponent {
     Swal.fire({
       title: "Are you sure you want to update this product?",
       showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: "Si",
+      confirmButtonText: "Yes",
       denyButtonText: "No",
-      cancelButtonText: "Cancelar"
+      icon: "question"
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -104,13 +101,11 @@ export default class UpdateProductComponent {
           Swal.fire("Updated product", "", "success");
           setTimeout(() => {
             window.location.reload()
-          }, 3000)
+          }, 2000)
           console.log("Updated product:", response);
         } catch (error) {
           console.error("Error updating the product:", error);
         }
-      } else if (result.isDenied) {
-        Swal.fire("Product not updated", "", "info");
       }
     });
   }

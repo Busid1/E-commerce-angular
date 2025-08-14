@@ -1,7 +1,7 @@
-<div class="rounded-lg border break-inside-avoid border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
+<div class="rounded-lg border break-inside-avoid border-gray-200 p-4 shadow-sm dark:border-gray-800 bg-slate-900 md:p-6">
   <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
     <a [href]="['/products/' + productCartItem().product._id]" class="shrink-0 md:order-1">
-      <img class="hidden h-20 w-20 dark:block rounded-md" [src]="productCartItem().product.image"
+      <img class="hidden w-20 dark:block rounded-md" [src]="productCartItem().product.image ? productCartItem().product.image : 'https://www.svgrepo.com/show/508699/landscape-placeholder.svg' "
         [alt]="productCartItem().product.title" />
     </a>
     <label for="counter-input" class="sr-only">Choose quantity:</label>

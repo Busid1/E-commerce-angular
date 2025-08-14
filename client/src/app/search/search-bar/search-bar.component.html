@@ -1,12 +1,12 @@
-<div class="relative flex flex-col justify-center items-center gap-5">
-    <h1 class="max-sm:text-2xl text-3xl font-bold tracking-tight leading-none dark:text-white">
+<div class="relative flex flex-col justify-center items-center gap-5 px-5 max-w-screen-lg mx-auto">
+    <h2 class="max-sm:text-2xl text-3xl font-bold text-center tracking-tight leading-none dark:text-white">
         Find the product you want
-    </h1>
-    <form class="flex z-10 items-center max-w-xl px-5 mx-auto w-full">
+    </h2>
+    <form class="flex z-10 items-center px-5 mx-auto w-full">
         <label for="simple-search" class="sr-only">Search</label>
         <div class="relative w-full">
             <input type="text" (input)="onSearch($event)" id="simple-search"
-                class="bg-slate-800 border border-slate-600 focus:border-white z-10 absolute backdrop-blur-md text-white text-md rounded-3xl block w-full ps-4 max-sm:p-2 p-4 bg-opacity-80"
+                class="bg-slate-800 border border-slate-600 focus:border-white z-10 absolute backdrop-blur-md text-white text-md rounded-3xl w-full ps-4 p-4 bg-opacity-80"
                 placeholder="Search product name..." required />
             @if(productsList.length > 0){
             <ul class="flex flex-col z-0 gap-2 absolute top-0 pt-16 pb-5 px-3 w-full bg-slate-800 rounded-3xl">
@@ -14,7 +14,7 @@
                 @for(product of productsList; track product){
                 <a class="flex gap-5 bg-opacity-90 bg-slate-900 rounded-xl p-4"
                     [routerLink]="['/product/', product._id]">
-                    <img class="size-12 rounded" [src]="product.image" alt="">
+                    <img class="size-12 rounded" [src]="product.image ? product.image : 'https://www.svgrepo.com/show/508699/landscape-placeholder.svg'" alt="{{product.title}}">
                     <div class="flex flex-col justify-between">
                         <li class="font-medium">{{product.title}}</li>
                         <li class="font-medium">{{product.price | currency}}</li>

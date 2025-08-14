@@ -26,7 +26,11 @@ export class ProductCardComponent {
   addToCartToast = false;
   _id = ""
 
-  async add(event: Event) {
+  async add(event: Event) {    
+    if(!this.isAuthenticated.handleIsAuthenticated()){
+      Swal.fire('You are not logged in!', '', 'error')
+      return
+    }
     const token = localStorage.getItem('authToken');
     if (!token) return;
     event.stopPropagation();
@@ -35,7 +39,7 @@ export class ProductCardComponent {
     this.addToCartToast = true;
     setTimeout(() => {
       this.addToCartToast = false;
-    }, 3000);
+    }, 1000);
     await firstValueFrom(this.productsService.addToCart(this.product()._id, token));
   }
 
@@ -50,19 +54,16 @@ export class ProductCardComponent {
   delete(event: Event) {
     event.preventDefault();
     Swal.fire({
-      title: "¿Seguro que quieres eliminar este producto?",
+      title: "Are you sure you want to delete this product?",
       showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: "Si",
+      confirmButtonText: "Yes",
       denyButtonText: "No",
-      cancelButtonText: "Cancelar"
+      icon: "question"
     }).then(async (result) => {
       if (result.isConfirmed) {
-        Swal.fire("Producto eliminado", "", "success");
+        Swal.fire("Removed product", "", "success");
         await firstValueFrom(this.productsService.deleteProduct(this.product()._id));
         window.location.reload()
-      } else if (result.isDenied) {
-        Swal.fire("Producto no eliminado", "", "info");
       }
     });
   }

@@ -2,8 +2,7 @@ import { Component, inject, input } from '@angular/core';
 import { CartItemComponent } from "./ui/cart-item/cart-item.component";
 import { CartStateService } from '../shared/data-access/cart-state.service';
 import { Product, ProductItemCart } from '../shared/interfaces/product.interface';
-import { CurrencyPipe } from '@angular/common';
-import axios from 'axios';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ProductService } from '../products/data-access/products.service';
@@ -11,9 +10,8 @@ import { ProductService } from '../products/data-access/products.service';
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CartItemComponent, CurrencyPipe, RouterLink],
+  imports: [CartItemComponent, CurrencyPipe, RouterLink, CommonModule],
   templateUrl: './cart.component.html',
-  styles: ``
 })
 
 export default class CartComponent {
@@ -28,7 +26,7 @@ export default class CartComponent {
     
     await firstValueFrom(this.productsService.removeFromCart(_id, token))
   }
-
+  
   async onIncrease(product: ProductItemCart) {
     this.state.update({
       ...product,
