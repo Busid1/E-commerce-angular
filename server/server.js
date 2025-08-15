@@ -11,9 +11,10 @@ import cookieParser from "cookie-parser";
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:4200', 
-  credentials: true                 
+  origin: ['http://localhost:4200', 'https://e-shoply.netlify.app'],
+  credentials: true
 }));
+
 app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
