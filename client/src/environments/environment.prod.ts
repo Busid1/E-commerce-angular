@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://e-commerce-angular-3tjs.onrender.com/api'
+  apiUrl: 'https://e-shopy-d31d3a7a82f8.herokuapp.com/api'
 };
