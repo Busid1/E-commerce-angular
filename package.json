@@ -1,0 +1,8 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "start": "cd server && npm start",
+    "heroku-postbuild": "npm --prefix client install && npm --prefix client run build && cp -r client/dist/* server/public/"
+  }
+}
