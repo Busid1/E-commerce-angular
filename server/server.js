@@ -14,7 +14,7 @@ app.use(cors({
   origin: 'http://localhost:4200', 
   credentials: true                 
 }));
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -25,15 +25,15 @@ app.use('/api', cartRoutes);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(path.join(__dirname, '../client/dist/e-commerce/browser')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/dist/e-commerce/browser/index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 dbConnect();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
