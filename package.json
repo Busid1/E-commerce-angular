@@ -3,7 +3,7 @@
     "private": true,
     "scripts": {
         "start": "cd server && npm start",
-        "heroku-postbuild": "npm --prefix client install && npm --prefix client run build && mkdir -p server/public && cp -r client/dist/e-commerce/browser/* server/public/"
+        "heroku-postbuild": "npm --prefix client install && npm --prefix client run build && cp -r client/dist/e-commerce/browser/* server/public/"
     },
     "engines": {
         "node": "20.x",
